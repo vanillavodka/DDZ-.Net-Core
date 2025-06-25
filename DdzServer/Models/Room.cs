@@ -14,7 +14,7 @@ namespace DdzServer.Models
         public int Gold { get; set; }
         public Player HouseManager { get; set; }
         public RoomState State { get; set; } = RoomState.ROOM_INVALID;
-        public object Carder { get; set; } // 发牌器，后续补充类型
+        public Carder Carder { get; set; } // 发牌器
         public Player LostPlayer { get; set; }
         public List<Player> RobPlayers { get; set; } = new List<Player>();
         public Player RoomMaster { get; set; }
@@ -133,6 +133,7 @@ namespace DdzServer.Models
         // 发牌
         public void DealCards(Carder carder)
         {
+            this.Carder = carder;
             var cards = carder.SplitThreeCards();
             for (int i = 0; i < PlayerList.Count && i < 3; i++)
             {

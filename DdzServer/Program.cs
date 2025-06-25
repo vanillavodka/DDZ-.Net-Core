@@ -6,6 +6,17 @@ using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
+// 配置 CORS
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowAll", policy =>
+    {
+        policy.AllowAnyOrigin()
+              .AllowAnyMethod()
+              .AllowAnyHeader();
+    });
+});
+
 // 配置 MySQL 数据库
 builder.Services.AddDbContext<GameDbContext>(options =>
     options.UseMySql(builder.Configuration.GetConnectionString("DefaultConnection"),
@@ -19,6 +30,9 @@ builder.Services.AddSignalR();
 builder.Services.AddControllers();
 
 var app = builder.Build();
+
+// 启用 CORS
+app.UseCors("AllowAll");
 
 app.UseRouting();
 

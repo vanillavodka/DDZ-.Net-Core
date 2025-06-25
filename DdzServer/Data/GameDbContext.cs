@@ -15,7 +15,23 @@ namespace DdzServer.Data
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
-            // 配置主键、索引、关系等
+            
+            // 配置Player表
+            modelBuilder.Entity<Player>(entity =>
+            {
+                entity.HasKey(e => e.AccountId);
+                entity.Property(e => e.AccountId).HasMaxLength(50);
+                entity.Property(e => e.NickName).HasMaxLength(50);
+                entity.Property(e => e.AvatarUrl).HasMaxLength(200);
+            });
+
+            // 配置Room表
+            modelBuilder.Entity<Room>(entity =>
+            {
+                entity.HasKey(e => e.RoomId);
+                entity.Property(e => e.RoomId).HasMaxLength(20);
+                entity.Property(e => e.State).HasConversion<int>();
+            });
         }
     }
 } 
